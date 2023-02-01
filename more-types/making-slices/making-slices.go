@@ -4,6 +4,7 @@ import "fmt"
 
 func main() {
 	a := make([]int, 5)
+
 	printSlice("a", a)
 
 	b := make([]int, 0, 5)
@@ -14,6 +15,19 @@ func main() {
 
 	d := c[2:5]
 	printSlice("d", d)
+
+	a1 := []int{1, 2, 3, 4, 5, 6}
+	printSlice("a1", a1)
+
+	b1 := make([]int, 0, 5)
+	printSlice("b1", b1)
+
+	c1 := a1[:2]
+	printSlice("c1", c1)
+
+	d1 := c1[2:5] //切片切的都是基础数组，而不是上一个切片
+	printSlice("d1", d1)
+
 }
 
 func printSlice(s string, x []int) {
