@@ -1,3 +1,3 @@
-DELETE  http://localhost:8000/movies/2
+DELETE  http://52.198.96.117:8000/movies/2
 content-type: application/json
 
