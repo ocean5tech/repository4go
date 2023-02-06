@@ -1,0 +1,17 @@
+CURL *curl;
+CURLcode res;
+curl = curl_easy_init();
+if(curl) {
+  curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
+  curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:8000/movies");
+  curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+  curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
+  struct curl_slist *headers = NULL;
+  headers = curl_slist_append(headers, "Cache-Control: no-cache");
+  headers = curl_slist_append(headers, "Accept: */*");
+  headers = curl_slist_append(headers, "Accept-Encoding: gzip, deflate");
+  headers = curl_slist_append(headers, "Connection: keep-alive");
+  curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+  res = curl_easy_perform(curl);
+}
+curl_easy_cleanup(curl);
