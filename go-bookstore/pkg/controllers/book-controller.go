@@ -69,19 +69,19 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error while parsing")
 
 	}
-	booksDetails, db := models.GetBookById(ID)
+	bookDetails, db := models.GetBookById(ID)
 	if updateBook.Name != "" {
-		booksDetails.Name = updateBook.Name
+		bookDetails.Name = updateBook.Name
 	}
 	if updateBook.Author != "" {
-		booksDetails.Author = updateBook.Author
+		bookDetails.Author = updateBook.Author
 	}
 	if updateBook.Publication != "" {
-		booksDetails.Publication = updateBook.Publication
+		bookDetails.Publication = updateBook.Publication
 	}
 
-	db.Save(&booksDetails)
-	res, _ := json.Marshal(booksDetails)
+	db.Save(&bookDetails)
+	res, _ := json.Marshal(bookDetails)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
