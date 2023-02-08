@@ -1,8 +1,8 @@
 package models
 
 import (
-	"github.com/go-delve/delve/pkg/config"
 	"github.com/jinzhu/gorm"
+	"github.com/ocean5tech/repository4go/go-bookstore/pkg/config"
 )
 
 var db *gorm.DB

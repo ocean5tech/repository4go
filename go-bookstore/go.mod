@@ -1,4 +1,4 @@
-module hello
+module github.com/ocean5tech/repository4go/go-bookstore
 
 go 1.19
 
