@@ -1,7 +1,6 @@
 package main
 
 import (
-	"hello/go-bookstore/pkg/routes"
 	"log"
 	"net/http"
 

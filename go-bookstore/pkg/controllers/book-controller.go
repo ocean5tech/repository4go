@@ -3,13 +3,12 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"hello/go-bookstore/pkg/models"
-	"hello/go-bookstore/pkg/utils"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/ocean5tech/repository4go/go-bookstore/pkg/models"
+	"github.com/ocean5tech/repository4go/go-bookstore/pkg/utils"
 )
 
 var NewBook models.Book
