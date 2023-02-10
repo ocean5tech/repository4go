@@ -25,3 +25,6 @@ root = 'Rocketyou1rocketyou1#ibm'
 
  show databases;
  show tables from XXXDB;
+
+
+ 刚进来时是没有特定db的，需要 use XXxDB
