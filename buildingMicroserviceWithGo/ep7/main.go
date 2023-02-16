@@ -8,8 +8,10 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/go-openapi/runtime/middleware"
+
 	"github.com/gorilla/mux"
-	"github.com/ocean5tech/repository4go/buildingMicroserviceWithGo/ep6/handlers"
+	"github.com/ocean5tech/repository4go/buildingMicroserviceWithGo/ep7/handlers"
 )
 
 func main() {
@@ -30,6 +32,15 @@ func main() {
 	postRouter.HandleFunc("/", ph.AddProduct)
 	postRouter.Use(ph.MiddlewareProductValidation)
 	//sm.Handle("/products", ph).Method("GET")
+
+	deleteRoute := sm.Methods(http.MethodDelete).Subrouter()
+	deleteRoute.HandleFunc("/{id:[0-9]+}", ph.DeleteProduct)
+
+	ops := middleware.RedocOpts{SpecURL: "/swagger.yaml"}
+	sh := middleware.Redoc(ops, nil)
+
+	getRouter.Handle("/docs", sh)
+	getRouter.Handle("/swagger.yaml", http.FileServer(http.Dir("./")))
 
 	s := &http.Server{
 		Addr:         ":9090",

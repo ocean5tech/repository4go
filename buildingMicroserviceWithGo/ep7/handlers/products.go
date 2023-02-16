@@ -1,3 +1,26 @@
+// Package classification ep7 API.
+//
+// the purpose of this application is to provide an application
+// that is using plain go code to define an API
+//
+// This should demonstrate all the possible comment annotations
+// that are available to turn go code into a fully compliant swagger 2.0 spec
+//
+// Terms Of Service:
+//
+// there are no TOS at this moment, use at your own risk we take no responsibility
+//
+//	Schemes: http
+//	BasePath: /
+//	Version: 1.0.0
+//
+//	Consumes:
+//	- application/json
+//
+//	Produces:
+//	- application/json
+//
+// swagger:meta
 package handlers
 
 import (
@@ -8,9 +31,30 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/ocean5tech/repository4go/buildingMicroserviceWithGo/ep6/data"
+	"github.com/ocean5tech/repository4go/buildingMicroserviceWithGo/ep7/data"
 )
 
+// A list of products return in the response
+// swagger:response productResponse
+type productResponse struct {
+	// All products in the system
+	// in: body
+	Body []data.Product
+}
+
+// swagger:response noContent
+type productsNoContent struct {
+}
+
+// swagger:parameters deleteProduct
+type productIDParameterWrapper struct {
+	// The id of the product to delete from the database
+	// in: path
+	// required: ture
+	ID int `json:"id"`
+}
+
+// Products is a http.Handler
 type Products struct {
 	l *log.Logger
 }
@@ -63,6 +107,11 @@ func NewProducts(l *log.Logger) *Products {
 
 } */
 
+// swagger:route GET /products products listProducts
+// Return a list of products from the database
+// responses:
+//
+//	200: productsResponse
 func (p *Products) GetProducts(rw http.ResponseWriter, r *http.Request) {
 
 	p.l.Println("Handle Get Products")
@@ -111,6 +160,33 @@ func (p *Products) UpdateProducts(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	err = data.UpdateProduct(id, &prod)
+	if err == data.ErrProductNotFound {
+		http.Error(rw, "Product not found", http.StatusBadRequest)
+		return
+	}
+
+	if err != nil {
+		http.Error(rw, "Error Internal", http.StatusInternalServerError)
+		return
+	}
+
+}
+
+// swagger:route DELETE /products/{id} products deleteProducts
+// Return a list of products from the database
+// responses:
+//
+//		201: noContent
+//	 DeleteProducts deletes a product from the database
+func (p *Products) DeleteProduct(rw http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+	id, _ := strconv.Atoi(vars["id"])
+
+	p.l.Println("Handle DELETE Product: ", id)
+
+	err := data.DeleteProduct(id)
+
 	if err == data.ErrProductNotFound {
 		http.Error(rw, "Product not found", http.StatusBadRequest)
 		return

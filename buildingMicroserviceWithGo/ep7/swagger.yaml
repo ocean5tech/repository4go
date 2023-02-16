@@ -1,0 +1,73 @@
+basePath: /
+consumes:
+    - application/json
+definitions:
+    Product:
+        properties:
+            description:
+                type: string
+                x-go-name: Description
+            id:
+                description: |-
+                    the id for this user
+
+                    required:ture
+                format: int64
+                minimum: 1
+                type: integer
+                x-go-name: ID
+            name:
+                type: string
+                x-go-name: Name
+            price:
+                format: float
+                type: number
+                x-go-name: Price
+            sku:
+                type: string
+                x-go-name: SKU
+        type: object
+        x-go-package: github.com/ocean5tech/repository4go/buildingMicroserviceWithGo/ep7/data
+info:
+    description: |-
+        the purpose of this application is to provide an application
+        that is using plain go code to define an API
+
+        This should demonstrate all the possible comment annotations
+        that are available to turn go code into a fully compliant swagger 2.0 spec
+    termsOfService: there are no TOS at this moment, use at your own risk we take no responsibility
+    title: ep7 API.
+    version: 1.0.0
+paths:
+    /products:
+        get:
+            description: Return a list of products from the database
+            operationId: listProducts
+            responses:
+                "200":
+                    $ref: '#/responses/productsResponse'
+            tags:
+                - products
+    /products/{id}:
+        delete:
+            description: Return a list of products from the database
+            operationId: deleteProducts
+            responses:
+                "201":
+                    $ref: '#/responses/noContent'
+            tags:
+                - products
+produces:
+    - application/json
+responses:
+    noContent:
+        description: ""
+    productResponse:
+        description: A list of products return in the response
+        schema:
+            items:
+                $ref: '#/definitions/Product'
+            type: array
+schemes:
+    - http
+swagger: "2.0"
